@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package vectordb;
+
+option cc_generic_services = false;
+
+service VectorService {
+    rpc CreateCollection(CreateCollectionRequest) returns (CreateCollectionResponse);
+    rpc DeleteCollection(DeleteCollectionRequest) returns (DeleteCollectionResponse);
+    rpc ListCollections(ListCollectionsRequest) returns (ListCollectionsResponse);
+
+    rpc Insert(InsertRequest) returns (InsertResponse);
+    rpc BatchInsert(BatchInsertRequest) returns (BatchInsertResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+    rpc Search(SearchRequest) returns (SearchResponse);
+    rpc BatchSearch(BatchSearchRequest) returns (BatchSearchResponse);
+
+    rpc GetVector(GetVectorRequest) returns (GetVectorResponse);
+
+    rpc Health(HealthRequest) returns (HealthResponse);
+    rpc Stats(StatsRequest) returns (StatsResponse);
+}
+
+message Vector {
+    string id = 1;
+    repeated float values = 2;
+    map<string, string> metadata = 3;
+}
+
+message SearchResult {
+    string id = 1;
+    float score = 2;
+    repeated float values = 3;
+    map<string, string> metadata = 4;
+}
+
+message CreateCollectionRequest {
+    string name = 1;
+    uint32 dimension = 2;
+    string metric = 3;
+    IndexConfig index_config = 4;
+}
+
+message IndexConfig {
+    uint32 m = 1;
+    uint32 ef_construction = 2;
+    uint32 ef_search = 3;
+}
+
+message CreateCollectionResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message DeleteCollectionRequest {
+    string name = 1;
+}
+
+message DeleteCollectionResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ListCollectionsRequest {}
+
+message ListCollectionsResponse {
+    repeated CollectionInfo collections = 1;
+}
+
+message CollectionInfo {
+    string name = 1;
+    uint32 dimension = 2;
+    uint64 count = 3;
+    string metric = 4;
+}
+
+message InsertRequest {
+    string collection = 1;
+    Vector vector = 2;
+}
+
+message InsertResponse {
+    bool success = 1;
+    string id = 2;
+}
+
+message BatchInsertRequest {
+    string collection = 1;
+    repeated Vector vectors = 2;
+}
+
+message BatchInsertResponse {
+    bool success = 1;
+    uint32 inserted_count = 2;
+    repeated string ids = 3;
+}
+
+message DeleteRequest {
+    string collection = 1;
+    string id = 2;
+}
+
+message DeleteResponse {
+    bool success = 1;
+}
+
+message SearchRequest {
+    string collection = 1;
+    repeated float query = 2;
+    uint32 top_k = 3;
+    map<string, string> filter = 4;
+}
+
+message SearchResponse {
+    repeated SearchResult results = 1;
+    float search_time_ms = 2;
+}
+
+message BatchSearchRequest {
+    string collection = 1;
+    repeated QueryVector queries = 2;
+    uint32 top_k = 3;
+}
+
+message QueryVector {
+    repeated float values = 1;
+}
+
+message BatchSearchResponse {
+    repeated SearchResultList results = 1;
+    float total_time_ms = 2;
+}
+
+message SearchResultList {
+    repeated SearchResult results = 1;
+}
+
+message GetVectorRequest {
+    string collection = 1;
+    string id = 2;
+}
+
+message GetVectorResponse {
+    bool found = 1;
+    Vector vector = 2;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+    bool healthy = 1;
+    string version = 2;
+    uint64 uptime_seconds = 3;
+}
+
+message StatsRequest {
+    string collection = 1;
+}
+
+message StatsResponse {
+    uint64 total_vectors = 1;
+    uint64 memory_usage_bytes = 2;
+    uint64 index_size_bytes = 3;
+    float avg_search_time_ms = 4;
+}

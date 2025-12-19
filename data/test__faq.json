@@ -1,0 +1,8 @@
+{
+  "name": "test__faq",
+  "dimension": 3072,
+  "metric": 1,
+  "M": 16,
+  "ef_construction": 200,
+  "ef_search": 50
+}

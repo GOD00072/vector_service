@@ -1,0 +1,42 @@
+# Build
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.a
+*.so
+*.dylib
+
+# Generated protobuf files
+src/*.pb.cc
+src/*.pb.h
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Data
+data/*.bin
+data/*.idx
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Binaries
+vector_server
+test_simd
+test_hnsw

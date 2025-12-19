@@ -1,0 +1,8 @@
+{
+  "name": "test__",
+  "dimension": 384,
+  "metric": 1,
+  "M": 16,
+  "ef_construction": 200,
+  "ef_search": 50
+}
