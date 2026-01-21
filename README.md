@@ -54,6 +54,27 @@
 
 ---
 
+
+  API Routes:
+
+  | Endpoint                     | Method         | Description             |
+  |------------------------------|----------------|-------------------------|
+  | /health                      | GET            | Health check            |
+  | /collections                 | GET/POST       | List/Create collections |
+  | /collections/:name           | GET/DELETE     | Get stats/Delete        |
+  | /search                      | POST           | Single search           |
+  | /batch_search                | POST           | Parallel batch search   |
+  | /insert                      | POST           | Insert vector           |
+  | /batch_insert                | POST           | Batch insert            |
+  | /tenants/:id/namespaces      | GET/POST       | List/Create namespace   |
+  | /tenants/:id/:ns/faq         | POST           | Add FAQ                 |
+  | /tenants/:id/:ns/faq/bulk    | POST           | Bulk add FAQ            |
+  | /tenants/:id/:ns/search      | POST           | Search in namespace     |
+  | /tenants/:id/search          | POST           | Cross-namespace search  |
+  | /tenants/:id/:ns/faq/:faq_id | GET/PUT/DELETE | FAQ CRUD                |
+  | /tenants/:id/:ns/stats       | GET            | Namespace stats         |
+  | /tenants/:id/stats           | GET            | Tenant stats            |
+
 ## สถาปัตยกรรม
 
 ```
